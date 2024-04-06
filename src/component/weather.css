@@ -1,0 +1,132 @@
+
+.weather-main{
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    width: 1034px;
+    margin: auto;
+    background-color: #222831;
+    border-radius: 30px 25px 25px 30px;
+}
+
+.weather-location-info{
+    padding: 60px 30px 80px 30px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 30px;
+    text-shadow: -1px -1px 0 black,  
+                  1px -1px 0 black,
+                 -1px  1px 0 black,
+                  1px  1px 0 black;
+    z-index: 10;
+}
+
+.location-info{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    margin-bottom: 200px;
+}
+
+.location-info-weekday{
+    font-size: 37px;
+}
+
+.location-info-date{
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.location-info-city{
+    display: flex;
+    gap: 10px;
+}
+
+
+.location-info-city-name{
+    font-size: 20px;
+}
+
+.weather-info{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.weather-info-icon img{
+    height: 95px;
+    width: 95px;
+}
+
+.weather-info-temp{
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.weather-info-state{
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.weather-forecast-info{
+    display: flex;
+    color: white;
+    padding: 65px 80px;
+    flex-wrap: wrap;
+    border-radius: 0px 25px 25px 0;
+    width: 542px;
+}
+
+.date-info{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 420px;
+}
+.precipitation, .humidity, .wind-speed{
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-end;
+}
+
+.precipitation-name, .humidity-name, .wind-name{
+    font-size: 28px;
+    font-weight: 700;
+}
+.precipitation-amount, .humidity-percent, .wind-speed{
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.weather-forecast{
+    display: flex;
+    background-color: red;
+    height: 165px;
+    width: 412px;
+}
+
+.choose-city{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 415px;
+}
+
+.city-name{
+    padding: 13px 105px;
+    background-color: white;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.set-city{
+    background: linear-gradient(#90D9E0, #5460E6);
+}
+
+.set-city img{
+    width: 33px;
+    height: 33px;
+    margin-right: 15px;
+}

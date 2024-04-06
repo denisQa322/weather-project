@@ -7,12 +7,6 @@ import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 
-type WeatherInfoType = {
-    icon: string
-    temperature: string
-    state: string
-    day: string
-}
 
 export function WeatherComponent() {
 
@@ -29,7 +23,7 @@ export function WeatherComponent() {
     const [formattedDate, setFormattedDate] = useState('')
     const [dayOfWeek, setDayOfWeek] = useState(0)
     const [cityImage, setCityimage] = useState('')
-    const [forecast,setForecast] = useState('')
+    const [forecast,setForecast] = useState('');
 
     const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 

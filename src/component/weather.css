@@ -102,9 +102,33 @@
 
 .weather-forecast{
     display: flex;
-    background-color: red;
+    
+}
+
+.forecast-1, .forecast-2, .forecast-3, .forecast-4{
     height: 165px;
-    width: 412px;
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+.weather-forecast-img img{
+    height: 55px;
+    width: 55px;
+}
+
+.day-of-week{
+    height: 24px;
+    width: fit-content;
+    font-size: 18px;
+}
+
+.weather-forecast-temp{
+    font-size: 20px;
+    width: fit-content;
+    display: flex;
 }
 
 .choose-city{
@@ -114,10 +138,9 @@
     width: 415px;
 }
 
-.city-name{
+.choose-city .city-name{
     padding: 13px 105px;
     background-color: white;
-    text-align: center;
     border-radius: 10px;
 }
 

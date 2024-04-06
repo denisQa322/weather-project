@@ -6,6 +6,7 @@ import './weather.css'
 import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+// import { WeatherForecastComponent } from './WeatherForecast';
 
 
 export function WeatherComponent() {
@@ -20,12 +21,26 @@ export function WeatherComponent() {
     const [precipitationAmounts, setPrecipitationsAmounts] = useState('')
     const [humidityPercent, setHumidityPercent] = useState('')
     const [windSpeed, setWindSpeed] = useState('')
+    const [cityImage, setCityimage] = useState('')
+
+    const [forecastImgOne, setForecastImgOne] = useState('');
+    const [forecastImgTwo, setForecastImgTwo] = useState('');
+    const [forecastImgThree, setForecastImgThree] = useState('');
+    const [forecastImgFour, setForecastImgFour] = useState('');
+
+    const [forecastTempOne, setForecastTempOne] = useState('')
+    const [forecastTempTwo, setForecastTempTwo] = useState('')
+    const [forecastTempThree, setForecastTempThree] = useState('')
+    const [forecastTempFour, setForecastTempFour] = useState('')
+
+    const [dayOne,setForecastDayOne] = useState('')
+    const [dayTwo,setForecastDayTwo] = useState('')
+    const [dayThree,setForecastDayThree] = useState('')
+    const [dayFour,setForecastDayFour] = useState('')
+
     const [formattedDate, setFormattedDate] = useState('')
     const [dayOfWeek, setDayOfWeek] = useState(0)
-    const [cityImage, setCityimage] = useState('')
-    const [forecast,setForecast] = useState('');
-
-    const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
     const setCity = (e: ChangeEvent<HTMLInputElement>) => {
         setCityName(e.target.value)
@@ -35,42 +50,62 @@ export function WeatherComponent() {
         getWeather();
         getImage();
         const currentDate = new Date();
-        setFormattedDate(format(currentDate, 'dd MMM yyyy', {locale: ru}));
+        setFormattedDate(format(currentDate, 'dd MMM yyyy', { locale: ru }));
         setDayOfWeek(currentDate.getDay())
+        
     }, [])
 
 
     function getWeather() {
         axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${cityName}&days=4&aqi=no&alerts=no&lang=ru`)
-        .then((res) => {
-            const { data } = res
-            setCityTemperature(data.current.temp_c)
-            setNameCity(data.location.name)
-            setWeatherIcon(data.current.condition.icon)
-            setWeatherState(data.current.condition.text)
-            setPrecipitationsAmounts(data.current.precip_mm)
-            setHumidityPercent(data.current.humidity)
-            setWindSpeed(data.current.wind_kph)
-            setForecast(data.forecast.forecastday)
-        })
-        .catch((error) => {
-            console.error(`Error getting weather data:${error}`)
-        });
+            .then((res) => {
+                const { data } = res
+                setCityTemperature(data.current.temp_c)
+                setNameCity(data.location.name)
+                setWeatherIcon(data.current.condition.icon)
+                setWeatherState(data.current.condition.text)
+                setPrecipitationsAmounts(data.current.precip_mm)
+                setHumidityPercent(data.current.humidity)
+                setWindSpeed(data.current.wind_kph)
+
+                console.log(data.forecast.forecastday)
+
+                //Average weather icon for forecast
+                setForecastImgOne(data.forecast.forecastday[0].day.condition.icon)
+                setForecastImgTwo(data.forecast.forecastday[1].day.condition.icon)
+                setForecastImgThree(data.forecast.forecastday[2].day.condition.icon)
+                setForecastImgFour(data.forecast.forecastday[3].day.condition.icon)
+
+                //Average weather temo for forecast
+                setForecastTempOne(data.forecast.forecastday[0].day.avgtemp_c)
+                setForecastTempTwo(data.forecast.forecastday[1].day.avgtemp_c)
+                setForecastTempThree(data.forecast.forecastday[2].day.avgtemp_c)
+                setForecastTempFour(data.forecast.forecastday[3].day.avgtemp_c)
+
+                //Day
+                setForecastDayOne(data.forecast.forecastday[0].date)
+                setForecastDayTwo(data.forecast.forecastday[1].date)
+                setForecastDayThree(data.forecast.forecastday[2].date)
+                setForecastDayFour(data.forecast.forecastday[3].date)
+            })
+            .catch((error) => {
+                console.error(`Error getting weather data:${error}`)
+            });
     }
 
-    function getImage(){
+    function getImage() {
         axios.get(`https://api.unsplash.com/photos/random?query=${cityName}&orientation=landscape&client_id=${accessKey}`).then((res) => {
             const { data } = res
             setCityimage(data.urls.regular)
         })
-        .catch((error) => {
-            console.error(`Error getting image of city:${error}`)
-        });
+            .catch((error) => {
+                console.error(`Error getting image of city:${error}`)
+            });
     }
 
     return (
         <div className="weather-main">
-            <div className='weather-location-info' style={{backgroundImage:`url(${cityImage})`, backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center'}}>
+            <div className='weather-location-info' style={{ backgroundImage: `url(${cityImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                 <div className="location-info">
                     <h1 className='location-info-weekday'>
                         {days[dayOfWeek]}
@@ -127,26 +162,59 @@ export function WeatherComponent() {
                     </div>
                 </div>
                 <div className='weather-forecast'>
-                    <div className='weather-forecast-img'>
-                        <img src="" alt="" />
+                    <div className='forecast-1'>
+                        <div className='weather-forecast-img'>
+                            <img src={forecastImgOne} alt="" />
+                        </div>
+                        <div className='day-of-week'>
+                            {dayOne}
+                        </div>
+                        <div className='weather-forecast-temp'>
+                            {forecastTempOne}°C
+                        </div>
                     </div>
-                    <div className='day-of-week'>
+                    <div className='forecast-2'>
+                        <div className='weather-forecast-img'>
+                            <img src={forecastImgTwo} alt="" />
+                        </div>
+                        <div className='day-of-week'>
+                            {dayTwo}
+                        </div>
+                        <div className='weather-forecast-temp'>
+                            {forecastTempTwo}°C
+                        </div>
+                    </div>
+                    <div className='forecast-3'>
+                        <div className='weather-forecast-img'>
+                            <img src={forecastImgThree} alt="" />
+                        </div>
+                        <div className='day-of-week'>
+                            {dayThree}
+                        </div>
+                        <div className='weather-forecast-temp'>
+                            {forecastTempThree}°C
+                        </div>
+                    </div>
+                    <div className='forecast-4'>
+                        <div className='weather-forecast-img'>
+                            <img src={forecastImgFour} alt="" />
+                        </div>
+                        <div className='day-of-week'>
+                            {dayFour}
+                        </div>
+                        <div className='weather-forecast-temp'>
+                            {forecastTempFour}°C
+                        </div>
+                    </div>
 
-                    </div>
-                    <div className='weather-forecast-temp'>
-
-                    </div>
-                    <div className='weather-forecast-state'>
-
-                    </div>
                 </div>
                 <div className='choose-city'>
                     <Input autoFocus={true} color='primary' className='city-name' type="text" onChange={setCity} />
-                    <Button size='large' className='set-city btn' onClick={() => {getWeather(); getImage()}}>
+                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage() }}>
                         <img src={Location} alt="" />
                         Choose city
                     </Button>
-                    
+
                 </div>
             </div>
         </div>

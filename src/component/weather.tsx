@@ -6,102 +6,113 @@ import './weather.css'
 import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-// import { WeatherForecastComponent } from './WeatherForecast';
 
 
 export function WeatherComponent() {
 
-    const accessKey = 'VdJQ2R5B_GLGwCPr2bH1P-hsN0LKERRokHqmqa7n5AQ'
+    const accessKey = 'ojgE7Knz82OleO9XiOgQ6NjFKuhxBidN_0lUVIIsxoA'
 
-    const [cityTemperature, setCityTemperature] = useState('')
-    const [cityName, setCityName] = useState('Almaty')
-    const [nameCity, setNameCity] = useState('')
-    const [weatherIcon, setWeatherIcon] = useState('')
-    const [weatherState, setWeatherState] = useState('')
-    const [precipitationAmounts, setPrecipitationsAmounts] = useState('')
-    const [humidityPercent, setHumidityPercent] = useState('')
-    const [windSpeed, setWindSpeed] = useState('')
-    const [cityImage, setCityimage] = useState('')
+    //setting current weather for the city
+    const [searchingCityName, setSearchingCityName] = useState('Almaty');
+    const [cityTemperature, setCityTemperature] = useState('');
+    const [nameCity, setNameCity] = useState('');
+    const [weatherIcon, setWeatherIcon] = useState('');
+    const [weatherState, setWeatherState] = useState('');
+    const [precipitationAmounts, setPrecipitationsAmounts] = useState('');
+    const [humidityPercent, setHumidityPercent] = useState('');
+    const [windSpeed, setWindSpeed] = useState('');
+    const [cityImage, setCityimage] = useState('');
 
+    //setting weather forecast image
     const [forecastImgOne, setForecastImgOne] = useState('');
     const [forecastImgTwo, setForecastImgTwo] = useState('');
     const [forecastImgThree, setForecastImgThree] = useState('');
     const [forecastImgFour, setForecastImgFour] = useState('');
 
-    const [forecastTempOne, setForecastTempOne] = useState('')
-    const [forecastTempTwo, setForecastTempTwo] = useState('')
-    const [forecastTempThree, setForecastTempThree] = useState('')
-    const [forecastTempFour, setForecastTempFour] = useState('')
+    //setting weather forecast temperature
+    const [forecastTempOne, setForecastTempOne] = useState('');
+    const [forecastTempTwo, setForecastTempTwo] = useState('');
+    const [forecastTempThree, setForecastTempThree] = useState('');
+    const [forecastTempFour, setForecastTempFour] = useState('');
 
-    const [dayOne,setForecastDayOne] = useState('')
-    const [dayTwo,setForecastDayTwo] = useState('')
-    const [dayThree,setForecastDayThree] = useState('')
-    const [dayFour,setForecastDayFour] = useState('')
+    //setting weather forecast date
+    const [dayOne,setForecastDayOne] = useState('');
+    const [dayTwo,setForecastDayTwo] = useState('');
+    const [dayThree,setForecastDayThree] = useState('');
+    const [dayFour,setForecastDayFour] = useState('');
 
-    const [formattedDate, setFormattedDate] = useState('')
-    const [dayOfWeek, setDayOfWeek] = useState(0)
+    //setting date
+    const [formattedDate, setFormattedDate] = useState('');
+    const [dayOfWeek, setDayOfWeek] = useState(0);
     const days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
     const setCity = (e: ChangeEvent<HTMLInputElement>) => {
-        setCityName(e.target.value)
-    }
+        setSearchingCityName(e.target.value);
+    };
 
     useEffect(() => {
         getWeather();
         getImage();
         const currentDate = new Date();
         setFormattedDate(format(currentDate, 'dd MMM yyyy', { locale: ru }));
-        setDayOfWeek(currentDate.getDay())
-        
+        setDayOfWeek(currentDate.getDay());
     }, [])
 
 
     function getWeather() {
-        axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${cityName}&days=4&aqi=no&alerts=no&lang=ru`)
+        axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${searchingCityName}&days=4&aqi=no&alerts=no&lang=ru`)
             .then((res) => {
-                const { data } = res
-                setCityTemperature(data.current.temp_c)
-                setNameCity(data.location.name)
-                setWeatherIcon(data.current.condition.icon)
-                setWeatherState(data.current.condition.text)
-                setPrecipitationsAmounts(data.current.precip_mm)
-                setHumidityPercent(data.current.humidity)
-                setWindSpeed(data.current.wind_kph)
+                const { data } = res;
 
-                console.log(data.forecast.forecastday)
-
+                
+                //setting current weather day
+                setCityTemperature(data.current.temp_c);
+                setNameCity(data.location.name);
+                setWeatherIcon(data.current.condition.icon);
+                setWeatherState(data.current.condition.text);
+                setPrecipitationsAmounts(data.current.precip_mm);
+                setHumidityPercent(data.current.humidity);
+                setWindSpeed(data.current.wind_kph);
+                
                 //Average weather icon for forecast
-                setForecastImgOne(data.forecast.forecastday[0].day.condition.icon)
-                setForecastImgTwo(data.forecast.forecastday[1].day.condition.icon)
-                setForecastImgThree(data.forecast.forecastday[2].day.condition.icon)
-                setForecastImgFour(data.forecast.forecastday[3].day.condition.icon)
-
+                setForecastImgOne(data.forecast.forecastday[0].day.condition.icon);
+                setForecastImgTwo(data.forecast.forecastday[1].day.condition.icon);
+                setForecastImgThree(data.forecast.forecastday[2].day.condition.icon);
+                setForecastImgFour(data.forecast.forecastday[3].day.condition.icon);
+                
                 //Average weather temo for forecast
-                setForecastTempOne(data.forecast.forecastday[0].day.avgtemp_c)
-                setForecastTempTwo(data.forecast.forecastday[1].day.avgtemp_c)
-                setForecastTempThree(data.forecast.forecastday[2].day.avgtemp_c)
-                setForecastTempFour(data.forecast.forecastday[3].day.avgtemp_c)
+                setForecastTempOne(data.forecast.forecastday[0].day.avgtemp_c);
+                setForecastTempTwo(data.forecast.forecastday[1].day.avgtemp_c);
+                setForecastTempThree(data.forecast.forecastday[2].day.avgtemp_c);
+                setForecastTempFour(data.forecast.forecastday[3].day.avgtemp_c);
+                
+                //Day-date
+                setForecastDayOne(format(data.forecast.forecastday[0].date, 'dd MMM', { locale: ru }));
+                setForecastDayTwo(format(data.forecast.forecastday[1].date, 'dd MMM', { locale: ru }));
+                setForecastDayThree(format(data.forecast.forecastday[2].date, 'dd MMM', { locale: ru }));
+                setForecastDayFour(format(data.forecast.forecastday[3].date, 'dd MMM', { locale: ru }));
 
-                //Day
-                setForecastDayOne(data.forecast.forecastday[0].date)
-                setForecastDayTwo(data.forecast.forecastday[1].date)
-                setForecastDayThree(data.forecast.forecastday[2].date)
-                setForecastDayFour(data.forecast.forecastday[3].date)
+                setSearchingCityName('');
             })
             .catch((error) => {
-                console.error(`Error getting weather data:${error}`)
+                console.error(`Error getting weather data:${error}`);
             });
     }
 
     function getImage() {
-        axios.get(`https://api.unsplash.com/photos/random?query=${cityName}&orientation=landscape&client_id=${accessKey}`).then((res) => {
+        axios.get(`https://api.unsplash.com/photos/random?query=${searchingCityName}&orientation=landscape&client_id=${accessKey}`).then((res) => {
             const { data } = res
-            setCityimage(data.urls.regular)
+            setCityimage(data.urls.regular);
         })
-            .catch((error) => {
-                console.error(`Error getting image of city:${error}`)
-            });
+        .catch((error) => {
+            console.error(`Error getting image of city:${error}`);
+        });
     }
+
+    function onClear(){
+        setSearchingCityName("");
+        console.log(searchingCityName)
+    };
 
     return (
         <div className="weather-main">
@@ -210,11 +221,10 @@ export function WeatherComponent() {
                 </div>
                 <div className='choose-city'>
                     <Input autoFocus={true} color='primary' className='city-name' type="text" onChange={setCity} />
-                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage() }}>
+                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage(); onClear()}}>
                         <img src={Location} alt="" />
                         Choose city
                     </Button>
-
                 </div>
             </div>
         </div>

@@ -84,6 +84,7 @@
     flex-direction: column;
     gap: 15px;
     width: 420px;
+    margin-bottom: 25px;
 }
 .precipitation, .humidity, .wind-speed{
     display: flex;
@@ -107,9 +108,8 @@
 
 .forecast-1, .forecast-2, .forecast-3, .forecast-4{
     height: 165px;
-    width: 120px;
+    width: 95.5px;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     gap: 20px;
     align-items: center;
@@ -136,6 +136,7 @@
     flex-direction: column;
     gap: 15px;
     width: 415px;
+    margin: auto;
 }
 
 .choose-city .city-name{
@@ -144,8 +145,11 @@
     border-radius: 10px;
 }
 
-.set-city{
+.choose-city .set-city{
     background: linear-gradient(#90D9E0, #5460E6);
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .set-city img{

@@ -6,6 +6,16 @@ import './weather.css'
 import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import { WeatherInfoComponent } from './WeatherInfo/WeatherInfoComponent';
+
+
+//1. Разделить weather на маленькие компоненты 
+//2. Маленькие компоненты должны быть структруированы и должны иметь свои props 
+//3. Подключить redux глобально
+//4. Реализовать асинхронные action
+//5. Избавиться от useState
+//6. Подключить состояние загрузки и возможных ошибок
+
 
 
 export function WeatherComponent() {
@@ -14,10 +24,7 @@ export function WeatherComponent() {
 
     //setting current weather for the city
     const [searchingCityName, setSearchingCityName] = useState('Almaty');
-    const [cityTemperature, setCityTemperature] = useState('');
     const [nameCity, setNameCity] = useState('');
-    const [weatherIcon, setWeatherIcon] = useState('');
-    const [weatherState, setWeatherState] = useState('');
     const [precipitationAmounts, setPrecipitationsAmounts] = useState('');
     const [humidityPercent, setHumidityPercent] = useState('');
     const [windSpeed, setWindSpeed] = useState('');
@@ -36,15 +43,15 @@ export function WeatherComponent() {
     const [forecastTempFour, setForecastTempFour] = useState('');
 
     //setting weather forecast date
-    const [dayOne,setForecastDayOne] = useState('');
-    const [dayTwo,setForecastDayTwo] = useState('');
-    const [dayThree,setForecastDayThree] = useState('');
-    const [dayFour,setForecastDayFour] = useState('');
+    const [dayOne, setForecastDayOne] = useState('');
+    const [dayTwo, setForecastDayTwo] = useState('');
+    const [dayThree, setForecastDayThree] = useState('');
+    const [dayFour, setForecastDayFour] = useState('');
 
     //setting date
     const [formattedDate, setFormattedDate] = useState('');
     const [dayOfWeek, setDayOfWeek] = useState(0);
-    const days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
     const setCity = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchingCityName(e.target.value);
@@ -60,39 +67,35 @@ export function WeatherComponent() {
 
 
     function getWeather() {
+
+        //отрефакторить и помещать данные в store оттуда получать все необходимые данные
         axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${searchingCityName}&days=4&aqi=no&alerts=no&lang=ru`)
             .then((res) => {
                 const { data } = res;
 
-                
                 //setting current weather day
-                setCityTemperature(data.current.temp_c);
                 setNameCity(data.location.name);
-                setWeatherIcon(data.current.condition.icon);
-                setWeatherState(data.current.condition.text);
                 setPrecipitationsAmounts(data.current.precip_mm);
                 setHumidityPercent(data.current.humidity);
                 setWindSpeed(data.current.wind_kph);
-                
+
                 //Average weather icon for forecast
                 setForecastImgOne(data.forecast.forecastday[0].day.condition.icon);
                 setForecastImgTwo(data.forecast.forecastday[1].day.condition.icon);
                 setForecastImgThree(data.forecast.forecastday[2].day.condition.icon);
                 setForecastImgFour(data.forecast.forecastday[3].day.condition.icon);
-                
+
                 //Average weather temo for forecast
                 setForecastTempOne(data.forecast.forecastday[0].day.avgtemp_c);
                 setForecastTempTwo(data.forecast.forecastday[1].day.avgtemp_c);
                 setForecastTempThree(data.forecast.forecastday[2].day.avgtemp_c);
                 setForecastTempFour(data.forecast.forecastday[3].day.avgtemp_c);
-                
+
                 //Day-date
                 setForecastDayOne(format(data.forecast.forecastday[0].date, 'dd MMM', { locale: ru }));
                 setForecastDayTwo(format(data.forecast.forecastday[1].date, 'dd MMM', { locale: ru }));
                 setForecastDayThree(format(data.forecast.forecastday[2].date, 'dd MMM', { locale: ru }));
                 setForecastDayFour(format(data.forecast.forecastday[3].date, 'dd MMM', { locale: ru }));
-
-                setSearchingCityName('');
             })
             .catch((error) => {
                 console.error(`Error getting weather data:${error}`);
@@ -100,19 +103,17 @@ export function WeatherComponent() {
     }
 
     function getImage() {
+        //отрефакторить и поместить в store
         axios.get(`https://api.unsplash.com/photos/random?query=${searchingCityName}&orientation=landscape&client_id=${accessKey}`).then((res) => {
             const { data } = res
             setCityimage(data.urls.regular);
         })
-        .catch((error) => {
-            console.error(`Error getting image of city:${error}`);
-        });
+            .catch((error) => {
+                console.error(`Error getting image of city:${error}`);
+            });
     }
 
-    function onClear(){
-        setSearchingCityName("");
-        console.log(searchingCityName)
-    };
+    //Добавить состояние загрузки и возможные ошибки
 
     return (
         <div className="weather-main">
@@ -133,17 +134,7 @@ export function WeatherComponent() {
                         </div>
                     </div>
                 </div>
-                <div className='weather-info'>
-                    <div className='weather-info-icon'>
-                        <img src={weatherIcon} alt="" />
-                    </div>
-                    <div className='weather-info-temp'>
-                        {cityTemperature} °C
-                    </div>
-                    <div className='weather-info-state'>
-                        {weatherState}
-                    </div>
-                </div>
+                <WeatherInfoComponent />
             </div>
             <div className='weather-forecast-info'>
                 <div className='date-info'>
@@ -221,7 +212,7 @@ export function WeatherComponent() {
                 </div>
                 <div className='choose-city'>
                     <Input autoFocus={true} color='primary' className='city-name' type="text" onChange={setCity} />
-                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage(); onClear()}}>
+                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage() }}>
                         <img src={Location} alt="" />
                         Choose city
                     </Button>

@@ -6,11 +6,15 @@ import './weather.css'
 import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import DateComponent from './date';
+import YearComponent from './year';
 
 
 export function WeatherComponent() {
 
     const accessKey = 'ojgE7Knz82OleO9XiOgQ6NjFKuhxBidN_0lUVIIsxoA'
+
+    const [date, setDate] = useState(new Date());
 
     //setting current weather for the city
     const [searchingCityName, setSearchingCityName] = useState('Almaty');
@@ -122,7 +126,7 @@ export function WeatherComponent() {
                         {days[dayOfWeek]}
                     </h1>
                     <h3 className='location-info-date'>
-                        {formattedDate}
+                        <DateComponent date={new Date()} /> <YearComponent date={new Date()} />
                     </h3>
                     <div className='location-info-city'>
                         <div className='location-info-city-icon'>
@@ -178,7 +182,7 @@ export function WeatherComponent() {
                             <img src={forecastImgOne} alt="" />
                         </div>
                         <div className='day-of-week'>
-                            {dayOne}
+                            <DateComponent date={new Date()} />
                         </div>
                         <div className='weather-forecast-temp'>
                             {forecastTempOne}°C

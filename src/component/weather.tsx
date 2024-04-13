@@ -193,7 +193,7 @@ export function WeatherComponent() {
                             <img src={forecastImgTwo} alt="" />
                         </div>
                         <div className='day-of-week'>
-                            {dayTwo}
+                            <DateComponent date={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)} />
                         </div>
                         <div className='weather-forecast-temp'>
                             {forecastTempTwo}°C
@@ -204,7 +204,7 @@ export function WeatherComponent() {
                             <img src={forecastImgThree} alt="" />
                         </div>
                         <div className='day-of-week'>
-                            {dayThree}
+                            <DateComponent date={new Date(new Date().getTime() + 48 * 60 * 60 * 1000)} />
                         </div>
                         <div className='weather-forecast-temp'>
                             {forecastTempThree}°C
@@ -215,7 +215,7 @@ export function WeatherComponent() {
                             <img src={forecastImgFour} alt="" />
                         </div>
                         <div className='day-of-week'>
-                            {dayFour}
+                            <DateComponent date={new Date(new Date().getTime() + 72 * 60 * 60 * 1000)} />
                         </div>
                         <div className='weather-forecast-temp'>
                             {forecastTempFour}°C

@@ -2,10 +2,11 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale/ru';
-import './weather.css'
-import Location from '../icons/Location.svg'
+import './weather.css';
+import Location from '../icons/Location.svg';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import ButtonComponent from './ButtonComponent';
 
 
 export function WeatherComponent() {
@@ -59,7 +60,7 @@ export function WeatherComponent() {
     }, [])
 
 
-    function getWeather() {
+     function getWeather() {
         axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${searchingCityName}&days=4&aqi=no&alerts=no&lang=ru`)
             .then((res) => {
                 const { data } = res;
@@ -221,10 +222,7 @@ export function WeatherComponent() {
                 </div>
                 <div className='choose-city'>
                     <Input autoFocus={true} color='primary' className='city-name' type="text" onChange={setCity} />
-                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage(); onClear()}}>
-                        <img src={Location} alt="" />
-                        Choose city
-                    </Button>
+                    <ButtonComponent onClick={() => { getWeather(); getImage(); } } />
                 </div>
             </div>
         </div>

@@ -6,6 +6,8 @@ import './weather.css'
 import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import { DaysOfWeek } from './days_component';
+import { City_name } from './city_component';
 
 
 export function WeatherComponent() {
@@ -15,7 +17,6 @@ export function WeatherComponent() {
     //setting current weather for the city
     const [searchingCityName, setSearchingCityName] = useState('Almaty');
     const [cityTemperature, setCityTemperature] = useState('');
-    const [nameCity, setNameCity] = useState('');
     const [weatherIcon, setWeatherIcon] = useState('');
     const [weatherState, setWeatherState] = useState('');
     const [precipitationAmounts, setPrecipitationsAmounts] = useState('');
@@ -43,8 +44,7 @@ export function WeatherComponent() {
 
     //setting date
     const [formattedDate, setFormattedDate] = useState('');
-    const [dayOfWeek, setDayOfWeek] = useState(0);
-    const days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+
 
     const setCity = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchingCityName(e.target.value);
@@ -55,7 +55,6 @@ export function WeatherComponent() {
         getImage();
         const currentDate = new Date();
         setFormattedDate(format(currentDate, 'dd MMM yyyy', { locale: ru }));
-        setDayOfWeek(currentDate.getDay());
     }, [])
 
 
@@ -67,7 +66,6 @@ export function WeatherComponent() {
                 
                 //setting current weather day
                 setCityTemperature(data.current.temp_c);
-                setNameCity(data.location.name);
                 setWeatherIcon(data.current.condition.icon);
                 setWeatherState(data.current.condition.text);
                 setPrecipitationsAmounts(data.current.precip_mm);
@@ -119,7 +117,7 @@ export function WeatherComponent() {
             <div className='weather-location-info' style={{ backgroundImage: `url(${cityImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                 <div className="location-info">
                     <h1 className='location-info-weekday'>
-                        {days[dayOfWeek]}
+                        <DaysOfWeek/>
                     </h1>
                     <h3 className='location-info-date'>
                         {formattedDate}
@@ -129,7 +127,7 @@ export function WeatherComponent() {
                             <img src={Location} alt="" />
                         </div>
                         <div className='location-info-city-name'>
-                            {nameCity}
+                            <City_name/>
                         </div>
                     </div>
                 </div>

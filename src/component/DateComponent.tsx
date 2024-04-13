@@ -11,8 +11,8 @@ const DateComponent: React.FC<Props> = ({ date }) => {
     const formattedDate = format(date, 'dd MMM', { locale: ru });
 
     return( 
-        <h3 className='location-info-date'>
-            {formattedDate} 2024
+        <h3 className='location-info-date' style={{marginRight:'5px'}}>
+            {formattedDate}
         </h3>
     )
 };

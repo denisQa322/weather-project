@@ -3,9 +3,6 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale/ru';
 import './weather.css'
-import Location from '../icons/Location.svg'
-import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
 import IconComponent from './WeatherInfo/IconComponent';
 import TemperatureComponent from './WeatherInfo/TemperatureIconComponent';
 import WeatherStateComponent from './WeatherInfo/WeatherStateComponent';
@@ -17,11 +14,13 @@ import HumidityPercentComponent from './HumidityComponent';
 import WindSpeedComponent from './WindComponent';
 import ButtonComponent from './ButtonComponent';
 import InputComponent from './InputComponent';
+import ForecastComponent from './ForecastComponent';
+import YearComponent from './YearComponent';
 
 
-//*TODO 1. Разделить weather на маленькие компоненты 
-//*TODO 2. Маленькие компоненты должны быть структруированы и должны иметь свои props 
-//*TODO 3. Подключить redux глобально
+//*TODO 1. Разделить weather на маленькие компоненты СДЕЛАНО
+//*TODO 2. Маленькие компоненты должны быть структруированы и должны иметь свои props СДЕЛАНО
+//*TODO 3. Подключить redux глобально СДЕЛАНО
 //*TODO 4. Реализовать асинхронные action
 //*TODO 5. Избавиться от useState
 //*TODO 6. Подключить состояние загрузки и возможных ошибок
@@ -136,7 +135,9 @@ export function WeatherComponent() {
             <div className='weather-location-info' style={{ backgroundImage: `url(${cityImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                 <div className="location-info">
                     <DaysOfWeek days={days[dayOfWeek]}/>
-                    <DateComponent date={new Date()} />
+                    <div className='date'>
+                        <DateComponent date={new Date()} /> <YearComponent date={new Date()}/>
+                    </div>
                     <CityNameComponent nameCity={nameCity}/>
                 </div>
                 <div className='weather-info-temp'>
@@ -152,54 +153,11 @@ export function WeatherComponent() {
                     <WindSpeedComponent windSpeed={windSpeed}/>
                 </div>
                 <div className='weather-forecast'>
-                    <div className='forecast-1'>
-                        <div className='weather-forecast-img'>
-                            <img src={forecastImgOne} alt="" />
-                        </div>
-                        <div className='day-of-forecast'>
-                            {dayOne}
-                        </div>
-                        <div className='weather-forecast-temp'>
-                            {forecastTempOne}°C
-                        </div>
-                    </div>
-                    <div className='forecast-2'>
-                        <div className='weather-forecast-img'>
-                            <img src={forecastImgTwo} alt="" />
-                        </div>
-                        <div className='day-of-week'>
-                            {dayTwo}
-                        </div>
-                        <div className='weather-forecast-temp'>
-                            {forecastTempTwo}°C
-                        </div>
-                    </div>
-                    <div className='forecast-3'>
-                        <div className='weather-forecast-img'>
-                            <img src={forecastImgThree} alt="" />
-                        </div>
-                        <div className='day-of-week'>
-                            {dayThree}
-                        </div>
-                        <div className='weather-forecast-temp'>
-                            {forecastTempThree}°C
-                        </div>
-                    </div>
-                    <div className='forecast-4'>
-                        <div className='weather-forecast-img'>
-                            <img src={forecastImgFour} alt="" />
-                        </div>
-                        <div className='day-of-week'>
-                            {dayFour}
-                        </div>
-                        <div className='weather-forecast-temp'>
-                            {forecastTempFour}°C
-                        </div>
-                    </div>
+                    <ForecastComponent />
                 </div>
                 <div className='choose-city'>
                     <InputComponent onChange={setCity}/>
-                    <ButtonComponent onClick={() => {getWeather(); getImage();}}/>
+                    <ButtonComponent onClick={() => {getWeather(); getImage()}}/>
                 </div>
             </div>
         </div>

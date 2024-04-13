@@ -80,7 +80,7 @@ export function WeatherComponent() {
     function getWeather() {
 
         //отрефакторить и помещать данные в store оттуда получать все необходимые данные
-        axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${searchingCityName}&days=4&aqi=no&alerts=no&lang=ru`)
+        axios.get(`http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${searchingCityName}&days=3&aqi=no&alerts=no&lang=ru`)
             .then((res) => {
                 const { data } = res;
 

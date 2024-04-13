@@ -6,16 +6,25 @@ import './weather.css'
 import Location from '../icons/Location.svg'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import { WeatherInfoComponent } from './WeatherInfo/WeatherInfoComponent';
+import IconComponent from './WeatherInfo/IconComponent';
+import TemperatureComponent from './WeatherInfo/TemperatureIconComponent';
+import WeatherStateComponent from './WeatherInfo/WeatherStateComponent';
+import CityNameComponent from './CityComponent';
+import DaysOfWeek from './DaysComponent';
+import DateComponent from './DateComponent';
+import PrecipitationComponent from './PrecipitationComponent';
+import HumidityPercentComponent from './HumidityComponent';
+import WindSpeedComponent from './WindComponent';
+import ButtonComponent from './ButtonComponent';
+import InputComponent from './InputComponent';
 
 
-//1. Разделить weather на маленькие компоненты 
-//2. Маленькие компоненты должны быть структруированы и должны иметь свои props 
-//3. Подключить redux глобально
-//4. Реализовать асинхронные action
-//5. Избавиться от useState
-//6. Подключить состояние загрузки и возможных ошибок
-
+//*TODO 1. Разделить weather на маленькие компоненты 
+//*TODO 2. Маленькие компоненты должны быть структруированы и должны иметь свои props 
+//*TODO 3. Подключить redux глобально
+//*TODO 4. Реализовать асинхронные action
+//*TODO 5. Избавиться от useState
+//*TODO 6. Подключить состояние загрузки и возможных ошибок
 
 
 export function WeatherComponent() {
@@ -29,6 +38,9 @@ export function WeatherComponent() {
     const [humidityPercent, setHumidityPercent] = useState('');
     const [windSpeed, setWindSpeed] = useState('');
     const [cityImage, setCityimage] = useState('');
+    const [Temperature, setTemperature] = useState('');
+    const [State, setState] = useState('');
+    const [Icon, setIcon] = useState('');
 
     //setting weather forecast image
     const [forecastImgOne, setForecastImgOne] = useState('');
@@ -78,6 +90,10 @@ export function WeatherComponent() {
                 setPrecipitationsAmounts(data.current.precip_mm);
                 setHumidityPercent(data.current.humidity);
                 setWindSpeed(data.current.wind_kph);
+                setTemperature(data.current.temp_c);
+                setState(data.current.condition.text);
+                setIcon(data.current.condition.icon);
+                
 
                 //Average weather icon for forecast
                 setForecastImgOne(data.forecast.forecastday[0].day.condition.icon);
@@ -119,56 +135,28 @@ export function WeatherComponent() {
         <div className="weather-main">
             <div className='weather-location-info' style={{ backgroundImage: `url(${cityImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                 <div className="location-info">
-                    <h1 className='location-info-weekday'>
-                        {days[dayOfWeek]}
-                    </h1>
-                    <h3 className='location-info-date'>
-                        {formattedDate}
-                    </h3>
-                    <div className='location-info-city'>
-                        <div className='location-info-city-icon'>
-                            <img src={Location} alt="" />
-                        </div>
-                        <div className='location-info-city-name'>
-                            {nameCity}
-                        </div>
-                    </div>
+                    <DaysOfWeek days={days[dayOfWeek]}/>
+                    <DateComponent date={new Date()} />
+                    <CityNameComponent nameCity={nameCity}/>
                 </div>
-                <WeatherInfoComponent />
+                <div className='weather-info-temp'>
+                    <IconComponent iconWeather={Icon} />
+                    <TemperatureComponent temperature={Temperature} />
+                    <WeatherStateComponent weatherState={State} />
+                </div>
             </div>
             <div className='weather-forecast-info'>
                 <div className='date-info'>
-                    <div className='precipitation'>
-                        <h4 className="precipitation-name">
-                            Осадки
-                        </h4>
-                        <h4 className='precipitation-amount'>
-                            {precipitationAmounts} мм
-                        </h4>
-                    </div>
-                    <div className='humidity'>
-                        <h4 className='humidity-name'>
-                            Влажность
-                        </h4>
-                        <h4 className='humidity-percent'>
-                            {humidityPercent}%
-                        </h4>
-                    </div>
-                    <div className='wind-speed'>
-                        <h4 className="wind-name">
-                            Ветер
-                        </h4>
-                        <h4 className="wind-speed">
-                            {windSpeed} км/ч
-                        </h4>
-                    </div>
+                    <PrecipitationComponent precipitation={precipitationAmounts}/>
+                    <HumidityPercentComponent humidityPercent={humidityPercent}/>
+                    <WindSpeedComponent windSpeed={windSpeed}/>
                 </div>
                 <div className='weather-forecast'>
                     <div className='forecast-1'>
                         <div className='weather-forecast-img'>
                             <img src={forecastImgOne} alt="" />
                         </div>
-                        <div className='day-of-week'>
+                        <div className='day-of-forecast'>
                             {dayOne}
                         </div>
                         <div className='weather-forecast-temp'>
@@ -208,14 +196,10 @@ export function WeatherComponent() {
                             {forecastTempFour}°C
                         </div>
                     </div>
-
                 </div>
                 <div className='choose-city'>
-                    <Input autoFocus={true} color='primary' className='city-name' type="text" onChange={setCity} />
-                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage() }}>
-                        <img src={Location} alt="" />
-                        Choose city
-                    </Button>
+                    <InputComponent onChange={setCity}/>
+                    <ButtonComponent onClick={() => {getWeather(); getImage();}}/>
                 </div>
             </div>
         </div>

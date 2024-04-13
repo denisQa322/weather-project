@@ -8,7 +8,12 @@ import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import DateComponent from './date';
 import YearComponent from './year';
-
+import PrecipitationComponent from './precipitation';
+import WindSpeedComponent from './wind';
+import HumidityComponent from './humidity';
+import TempComponent from './temperature';
+import WeatherStateComponent from './weatherstate';
+import WeatherIconComponent from './icon';
 
 export function WeatherComponent() {
 
@@ -40,15 +45,15 @@ export function WeatherComponent() {
     const [forecastTempFour, setForecastTempFour] = useState('');
 
     //setting weather forecast date
-    const [dayOne,setForecastDayOne] = useState('');
-    const [dayTwo,setForecastDayTwo] = useState('');
-    const [dayThree,setForecastDayThree] = useState('');
-    const [dayFour,setForecastDayFour] = useState('');
+    const [dayOne, setForecastDayOne] = useState('');
+    const [dayTwo, setForecastDayTwo] = useState('');
+    const [dayThree, setForecastDayThree] = useState('');
+    const [dayFour, setForecastDayFour] = useState('');
 
     //setting date
     const [formattedDate, setFormattedDate] = useState('');
     const [dayOfWeek, setDayOfWeek] = useState(0);
-    const days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
     const setCity = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchingCityName(e.target.value);
@@ -68,7 +73,7 @@ export function WeatherComponent() {
             .then((res) => {
                 const { data } = res;
 
-                
+
                 //setting current weather day
                 setCityTemperature(data.current.temp_c);
                 setNameCity(data.location.name);
@@ -77,19 +82,19 @@ export function WeatherComponent() {
                 setPrecipitationsAmounts(data.current.precip_mm);
                 setHumidityPercent(data.current.humidity);
                 setWindSpeed(data.current.wind_kph);
-                
+
                 //Average weather icon for forecast
                 setForecastImgOne(data.forecast.forecastday[0].day.condition.icon);
                 setForecastImgTwo(data.forecast.forecastday[1].day.condition.icon);
                 setForecastImgThree(data.forecast.forecastday[2].day.condition.icon);
                 setForecastImgFour(data.forecast.forecastday[3].day.condition.icon);
-                
+
                 //Average weather temo for forecast
                 setForecastTempOne(data.forecast.forecastday[0].day.avgtemp_c);
                 setForecastTempTwo(data.forecast.forecastday[1].day.avgtemp_c);
                 setForecastTempThree(data.forecast.forecastday[2].day.avgtemp_c);
                 setForecastTempFour(data.forecast.forecastday[3].day.avgtemp_c);
-                
+
                 //Day-date
                 setForecastDayOne(format(data.forecast.forecastday[0].date, 'dd MMM', { locale: ru }));
                 setForecastDayTwo(format(data.forecast.forecastday[1].date, 'dd MMM', { locale: ru }));
@@ -108,12 +113,12 @@ export function WeatherComponent() {
             const { data } = res
             setCityimage(data.urls.regular);
         })
-        .catch((error) => {
-            console.error(`Error getting image of city:${error}`);
-        });
+            .catch((error) => {
+                console.error(`Error getting image of city:${error}`);
+            });
     }
 
-    function onClear(){
+    function onClear() {
         setSearchingCityName("");
         console.log(searchingCityName)
     };
@@ -138,48 +143,21 @@ export function WeatherComponent() {
                     </div>
                 </div>
                 <div className='weather-info'>
-                    <div className='weather-info-icon'>
-                        <img src={weatherIcon} alt="" />
-                    </div>
-                    <div className='weather-info-temp'>
-                        {cityTemperature} °C
-                    </div>
-                    <div className='weather-info-state'>
-                        {weatherState}
-                    </div>
+                    <WeatherIconComponent weatherIcon={weatherIcon}/>
+                    <TempComponent cityTemperature={cityTemperature}/>
+                    <WeatherStateComponent weatherState={weatherState}/>
                 </div>
             </div>
             <div className='weather-forecast-info'>
                 <div className='date-info'>
-                    <div className='precipitation'>
-                        <h4 className="precipitation-name">
-                            Осадки
-                        </h4>
-                        <h4 className='precipitation-amount'>
-                            {precipitationAmounts} мм
-                        </h4>
-                    </div>
-                    <div className='humidity'>
-                        <h4 className='humidity-name'>
-                            Влажность
-                        </h4>
-                        <h4 className='humidity-percent'>
-                            {humidityPercent}%
-                        </h4>
-                    </div>
-                    <div className='wind-speed'>
-                        <h4 className="wind-name">
-                            Ветер
-                        </h4>
-                        <h4 className="wind-speed">
-                            {windSpeed} км/ч
-                        </h4>
-                    </div>
+                    <PrecipitationComponent amount={precipitationAmounts} />
+                    <HumidityComponent humidityPercent={humidityPercent} />
+                    <WindSpeedComponent windSpeed={windSpeed}/>
                 </div>
                 <div className='weather-forecast'>
-                    <div className='forecast-1'>
+                    <div className='forecast-1'> 
                         <div className='weather-forecast-img'>
-                            <img src={forecastImgOne} alt="" />
+                            <WeatherIconComponent weatherIcon={forecastImgOne}/>
                         </div>
                         <div className='day-of-week'>
                             <DateComponent date={new Date()} />
@@ -190,7 +168,7 @@ export function WeatherComponent() {
                     </div>
                     <div className='forecast-2'>
                         <div className='weather-forecast-img'>
-                            <img src={forecastImgTwo} alt="" />
+                            <WeatherIconComponent weatherIcon={forecastImgTwo}/>
                         </div>
                         <div className='day-of-week'>
                             <DateComponent date={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)} />
@@ -201,7 +179,7 @@ export function WeatherComponent() {
                     </div>
                     <div className='forecast-3'>
                         <div className='weather-forecast-img'>
-                            <img src={forecastImgThree} alt="" />
+                            <WeatherIconComponent weatherIcon={forecastImgThree}/>
                         </div>
                         <div className='day-of-week'>
                             <DateComponent date={new Date(new Date().getTime() + 48 * 60 * 60 * 1000)} />
@@ -212,7 +190,7 @@ export function WeatherComponent() {
                     </div>
                     <div className='forecast-4'>
                         <div className='weather-forecast-img'>
-                            <img src={forecastImgFour} alt="" />
+                            <WeatherIconComponent weatherIcon={forecastImgFour}/>
                         </div>
                         <div className='day-of-week'>
                             <DateComponent date={new Date(new Date().getTime() + 72 * 60 * 60 * 1000)} />
@@ -225,7 +203,7 @@ export function WeatherComponent() {
                 </div>
                 <div className='choose-city'>
                     <Input autoFocus={true} color='primary' className='city-name' type="text" onChange={setCity} />
-                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage(); onClear()}}>
+                    <Button size='large' className='set-city btn' onClick={() => { getWeather(); getImage(); onClear() }}>
                         <img src={Location} alt="" />
                         Choose city
                     </Button>

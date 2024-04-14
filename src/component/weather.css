@@ -34,7 +34,8 @@
     font-size: 37px;
 }
 
-.location-info-date{
+.date{
+    display: flex;
     font-size: 22px;
     font-weight: 400;
 }
@@ -106,7 +107,7 @@
     
 }
 
-.forecast-1, .forecast-2, .forecast-3, .forecast-4{
+.forecast{
     height: 165px;
     width: 95.5px;
     display: flex;
@@ -119,7 +120,7 @@
     width: 55px;
 }
 
-.day-of-week{
+.day-of-forecast{
     height: 24px;
     width: fit-content;
     font-size: 18px;

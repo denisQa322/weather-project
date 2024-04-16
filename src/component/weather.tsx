@@ -2,8 +2,9 @@ import axios from "axios";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale/ru";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../Redux";
+import { useAppSelector } from "../Redux";
 import { WeatherResponse } from "../Redux/weather";
+import { days } from "../const";
 import ButtonComponent from "./ButtonComponent";
 import CityNameComponent from "./CityComponent";
 import DateComponent from "./DateComponent";
@@ -27,7 +28,6 @@ import "./weather.css";
 //*TODO 6. Подключить состояние загрузки и возможных ошибок
 
 export function WeatherComponent() {
-  const dispatch = useAppDispatch();
   const { data, status } = useAppSelector((state) => state.weather);
   const accessKey = "ojgE7Knz82OleO9XiOgQ6NjFKuhxBidN_0lUVIIsxoA";
 
@@ -63,19 +63,9 @@ export function WeatherComponent() {
   //setting date
   const [formattedDate, setFormattedDate] = useState("");
   const [dayOfWeek, setDayOfWeek] = useState(0);
-  const days = [
-    "Воскресенье",
-    "Понедельник",
-    "Вторник",
-    "Среда",
-    "Четверг",
-    "Пятница",
-    "Суббота",
-  ];
 
-  const setCity = (e: ChangeEvent<HTMLInputElement>) => {
+  const setCity = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchingCityName(e.target.value);
-  };
 
   useEffect(() => {
     getWeather();
@@ -91,8 +81,7 @@ export function WeatherComponent() {
       .get<WeatherResponse>(
         `http://api.weatherapi.com/v1/forecast.json?key=9659b8bde68442708fc152410240404&q=${searchingCityName}&days=3&aqi=no&alerts=no&lang=ru`
       )
-      .then((res) => {
-        const { data } = res;
+      .then(({ data }) => {
         // dispatch(setWeather(data));
         //setting current weather day
         setNameCity(data.location.name);

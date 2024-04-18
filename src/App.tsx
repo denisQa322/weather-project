@@ -1,14 +1,14 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import store from '../src/Redux/store'; 
+import './App.css';
 import { WeatherComponent } from './component/weather';
 
-const App = () => {
+function App() {
   return (
-    <Provider store={store}>
-      {WeatherComponent()}
-    </Provider>
+    <div className="App">
+      <WeatherComponent/>
+    </div>
   );
 }
 
 export default App;
+

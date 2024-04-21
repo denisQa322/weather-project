@@ -1,9 +1,11 @@
-import React from 'react';
+import { useAppSelector } from "../store";
 
-interface Props {
-    windSpeed: string
-}
-const WindSpeedComponent: React.FC<Props> = ({ windSpeed }) => {
+const WindSpeedComponent= () => {
+
+    const windSpeed = useAppSelector(
+        (state) => state.weather.data?.current.wind_kph
+    );
+
     return (
         <div className='wind-speed'>
             <h4 className="wind-name">

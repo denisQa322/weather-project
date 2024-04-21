@@ -8,6 +8,7 @@ import ButtonComponent from './ButtonComponent';
 import InputComponent from './InputComponent';
 import BackgroundImageComponent from './BackgroundImageComponent';
 import TemperatureComponent from './WeatherInfo/TemperatureComponent';
+import { useAppSelector } from '../store';
 
 
 //*TODO 1. Разделить weather на маленькие компоненты СДЕЛАНО
@@ -21,10 +22,9 @@ import TemperatureComponent from './WeatherInfo/TemperatureComponent';
 export function WeatherComponent() {
 
     //setting current weather for the city
+    
+    const { data, status } = useAppSelector((state) => state.weather);
     const [city, SetCity] = useState('Almaty');
-    const [precipitationAmounts, setPrecipitationsAmounts] = useState('');
-    const [humidityPercent, setHumidityPercent] = useState('');
-    const [windSpeed, setWindSpeed] = useState('');
     const [cityImage, setCityimage] = useState('');
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +40,12 @@ export function WeatherComponent() {
     function getWeather() {
 
         //отрефакторить и помещать данные в store оттуда получать все необходимые данные
-        axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${city}&aqi=no`)
+        axios.get(
+            `http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${city}&aqi=no
+        `)
         .then((res) => {
                 const { data } = res;
-                //setting current weather day
-                setPrecipitationsAmounts(data.current.precip_mm);
-                setHumidityPercent(data.current.humidity);
-                setWindSpeed(data.current.wind_kph);
+                console.log(data);
             })
             .catch((error) => {
                 console.error(`Error getting weather data:${error}`);
@@ -66,14 +65,17 @@ export function WeatherComponent() {
 
     //Добавить состояние загрузки и возможные ошибки
 
+    if (status === "loading") return <>Loading...</>;
+    if(status === 'failed') return <>Error...</>;
+
     return (
         <div className="weather-main">
             <BackgroundImageComponent image={cityImage}/>
             <div className='weather-forecast-info'>
                 <div className='date-info'>
-                    <PrecipitationComponent precipitation={precipitationAmounts}/>
-                    <HumidityPercentComponent humidityPercent={humidityPercent}/>
-                    <WindSpeedComponent windSpeed={windSpeed}/>
+                    <PrecipitationComponent />
+                    <HumidityPercentComponent />
+                    <WindSpeedComponent />
                     <TemperatureComponent />
                 </div>
                 <div className='choose-city'>
@@ -83,4 +85,5 @@ export function WeatherComponent() {
             </div>
         </div>
     );
+
 }

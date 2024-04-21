@@ -61,11 +61,15 @@ const initialState: WeatherState = {
 
 export const fetchWeatherData = createAsyncThunk(
   "weather/fetchWeatherData",
-  async (city: string) => {
-    const response = await axios.get<WeatherResponse>(
-      `http://api.weatherapi.com/v1/current.json?key=37fdc78617bd479db3d94410242104&q=${city}&aqi=no`
-    );
-    return response.data;
+  async (city: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${city}&aqi=no`
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error.message);
+    }
   }
 );
 

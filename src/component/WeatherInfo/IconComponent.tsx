@@ -1,16 +1,16 @@
-import React from "react";
+import { useAppSelector } from "../../store";
 
-interface Props{
-    iconWeather: string;
-}
-
-const IconComponent:React.FC<Props> = ({iconWeather}) => {
+const IconComponent = () => {
     
+    const icon = useAppSelector(
+        (state) => state.weather.data?.current.condition.icon
+    );
+
     return (
         <div className="weather-info-icon">
-            <img src={iconWeather} alt="" />
+            <img src={icon} alt="" />
         </div>
-    )
-}
+    );
+};
 
 export default IconComponent;

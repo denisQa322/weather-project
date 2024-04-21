@@ -1,9 +1,12 @@
-import React from 'react';
+import { useAppSelector } from "../store";
 
-interface Props {
-    humidityPercent: string
-}
-const HumidityPercentComponent: React.FC<Props> = ({ humidityPercent }) => {
+
+const HumidityPercentComponent= () => {
+
+    const humidityPercent = useAppSelector(
+        (state) => state.weather.data?.current.humidity
+    );
+    
     return (
         <div className='humidity'>
             <h4 className='humidity-name'>

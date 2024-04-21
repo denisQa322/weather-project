@@ -25,7 +25,7 @@ const BackgroundImageComponent: React.FC<ImageProps> = ({image}) => {
                     <CityNameComponent nameCity={''}/>
                 </div>
                 <div className='weather-info-temp'>
-                    <IconComponent iconWeather={''} />
+                    <IconComponent />
                     <TemperatureComponent />
                     <WeatherStateComponent />
                 </div>

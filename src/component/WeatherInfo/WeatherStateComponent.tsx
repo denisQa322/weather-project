@@ -1,10 +1,10 @@
-import React from "react";
+import { useAppSelector } from "../../store";
 
-interface Props {
-    weatherState: string;
-}
+const WeatherStateComponent = () => {
 
-const WeatherStateComponent: React.FC<Props> = ({ weatherState }) => {
+    const weatherState = useAppSelector(
+        (state) => state.weather.data?.current.condition.text
+    );
 
     return (
 

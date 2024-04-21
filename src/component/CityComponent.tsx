@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Location from '../icons/Location.svg'
 
 interface Props{

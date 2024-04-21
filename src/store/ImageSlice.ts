@@ -14,9 +14,9 @@ interface ImageResponse {
   }
 
 
-  export const fetchWeatherData = createAsyncThunk(
-    "weather/fetchWeatherData",
-    async (city: string) => { // Вставьте свой API-ключ для WeatherAPI
+  export const fetchImage = createAsyncThunk(
+    "image/fetchImage",
+    async (city: string) => {
       const response = await axios.get<ImageResponse>(
         `https://api.unsplash.com/photos/random?query=${city}&orientation=landscape&client_id=${process.env.REACT_APP_IMAGE_API_KEY}`
       );
@@ -35,7 +35,7 @@ interface ImageResponse {
   };
 
   const imageSlice = createSlice({
-    name: "weather",
+    name: "image",
     initialState,
     reducers: {
         setImage: (state, action: PayloadAction<ImageResponse>) => {
@@ -43,20 +43,20 @@ interface ImageResponse {
         state.data = action.payload;
       },
     },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(fetchWeatherData.pending, (state) => {
-  //         state.status = "loading";
-  //       })
-  //       .addCase(fetchWeatherData.fulfilled, (state, action) => {
-  //         state.status = "success";
-  //         state.data = action.payload;
-  //       })
-  //       .addCase(fetchWeatherData.rejected, (state, action) => {
-  //         state.status = "failed";
-  //         state.error = action.error.message || null;
-  //       });
-  //   },
+    extraReducers: (builder) => {
+      builder
+        .addCase(fetchImage.pending, (state) => {
+          state.status = "loading";
+        })
+        .addCase(fetchImage.fulfilled, (state, action) => {
+          state.status = "success";
+          state.data = action.payload;
+        })
+        .addCase(fetchImage.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message || null;
+        });
+    },
   });
   
   export const { setImage } = imageSlice.actions;

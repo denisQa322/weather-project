@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React from "react";
 import DaysOfWeek from "./DaysComponent";
 import { days } from "../const/days";
 import DateComponent from "./DateComponent";
 import YearComponent from "./YearComponent";
 import CityNameComponent from "./CityComponent";
 import IconComponent from "./WeatherInfo/IconComponent";
-import TemperatureComponent from "./WeatherInfo/TemperatureIconComponent";
+import TemperatureComponent from "./WeatherInfo/TemperatureComponent";
 import WeatherStateComponent from "./WeatherInfo/WeatherStateComponent";
 
 interface ImageProps {
@@ -14,26 +14,20 @@ interface ImageProps {
 
 const BackgroundImageComponent: React.FC<ImageProps> = ({image}) => {
 
-    let dayOfWeek = 0;
-    let nameCity = '';
-    let icon = '';
-    let temperature = '';
-    let state = '';
-
     return(
         <div className='weather-location-info' style={{ backgroundImage: `url(${image})`}}>
             <div className="location-info">
-                    <DaysOfWeek days={days[dayOfWeek]}/>
+                    <DaysOfWeek days={days[0]}/>
                     <div className='date'>
                         <DateComponent date={new Date()} /> 
                         <YearComponent date={new Date()}/>
                     </div>
-                    <CityNameComponent nameCity={nameCity}/>
+                    <CityNameComponent nameCity={''}/>
                 </div>
                 <div className='weather-info-temp'>
-                    <IconComponent iconWeather={icon} />
-                    <TemperatureComponent temperature={temperature} />
-                    <WeatherStateComponent weatherState={state} />
+                    <IconComponent iconWeather={''} />
+                    <TemperatureComponent />
+                    <WeatherStateComponent />
                 </div>
         </div>
     )

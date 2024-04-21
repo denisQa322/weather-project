@@ -7,6 +7,7 @@ import WindSpeedComponent from './WindComponent';
 import ButtonComponent from './ButtonComponent';
 import InputComponent from './InputComponent';
 import BackgroundImageComponent from './BackgroundImageComponent';
+import TemperatureComponent from './WeatherInfo/TemperatureComponent';
 
 
 //*TODO 1. Разделить weather на маленькие компоненты СДЕЛАНО
@@ -40,7 +41,7 @@ export function WeatherComponent() {
 
         //отрефакторить и помещать данные в store оттуда получать все необходимые данные
         axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${city}&aqi=no`)
-            .then((res) => {
+        .then((res) => {
                 const { data } = res;
                 //setting current weather day
                 setPrecipitationsAmounts(data.current.precip_mm);
@@ -51,8 +52,6 @@ export function WeatherComponent() {
                 console.error(`Error getting weather data:${error}`);
             });
     }
-
-    console.log(`https://api.unsplash.com/photos/random?query=${city}&orientation=landscape&client_id=${process.env.REACT_APP_IMAGE_API_KEY}`)
 
     function getImage() {
         //отрефакторить и поместить в store
@@ -75,6 +74,7 @@ export function WeatherComponent() {
                     <PrecipitationComponent precipitation={precipitationAmounts}/>
                     <HumidityPercentComponent humidityPercent={humidityPercent}/>
                     <WindSpeedComponent windSpeed={windSpeed}/>
+                    <TemperatureComponent />
                 </div>
                 <div className='choose-city'>
                     <InputComponent onChange={changeHandler}/>

@@ -1,16 +1,11 @@
-import React from "react";
+import { useAppSelector } from "../../Redux";
 
-interface Props {
-    temperature: string;
-}
+const TemperatureComponent = () => {
+  const temperature = useAppSelector(
+    (state) => state.weather.data?.current.temp_c
+  );
 
-const TemperatureComponent: React.FC<Props> = ({temperature}) => {
-
-    return (
-        <div className='weather-info-temp'>
-            {temperature} °C
-        </div>
-    )
-}
+  return <div className="weather-info-temp">{temperature} °C</div>;
+};
 
 export default TemperatureComponent;

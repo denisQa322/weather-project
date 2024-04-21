@@ -1,12 +1,13 @@
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "../../store/index";
 
 const TemperatureComponent = () => {
-    const temperature = useAppSelector(
-        (state) => state.weather.data?.current.temp_c
-    );
+    
+  const temperature = useAppSelector(
+    (state) => state.weather.data?.current.temp_c
+  );
 
-    return (
-        <div className="weather-info-temp">
+  return (
+        <div className="weather-info-temp"> 
             {temperature} °C
         </div>
     );

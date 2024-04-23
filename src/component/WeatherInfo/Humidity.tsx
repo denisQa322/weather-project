@@ -1,7 +1,7 @@
-import { useAppSelector } from "../store";
+import { useAppSelector } from "../../store";
 
 
-const HumidityPercentComponent= () => {
+const HumidityPercent= () => {
 
     const humidityPercent = useAppSelector(
         (state) => state.weather.data?.current.humidity
@@ -19,4 +19,4 @@ const HumidityPercentComponent= () => {
     )
 }
 
-export default HumidityPercentComponent;
+export default HumidityPercent;

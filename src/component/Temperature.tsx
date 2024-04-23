@@ -1,6 +1,6 @@
-import { useAppSelector } from "../../store/index";
+import { useAppSelector } from "../store/index";
 
-const TemperatureComponent = () => {
+const Temperature = () => {
     
   const temperature = useAppSelector(
     (state) => state.weather.data?.current.temp_c
@@ -13,4 +13,4 @@ const TemperatureComponent = () => {
     );
 };
 
-export default TemperatureComponent;
+export default Temperature;

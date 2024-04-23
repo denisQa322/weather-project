@@ -1,6 +1,6 @@
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "../store";
 
-const WeatherStateComponent = () => {
+const WeatherState = () => {
 
     const weatherState = useAppSelector(
         (state) => state.weather.data?.current.condition.text
@@ -14,4 +14,4 @@ const WeatherStateComponent = () => {
     )
 }
 
-export default WeatherStateComponent;
+export default WeatherState;

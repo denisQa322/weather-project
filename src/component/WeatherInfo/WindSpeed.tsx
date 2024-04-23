@@ -1,6 +1,6 @@
-import { useAppSelector } from "../store";
+import { useAppSelector } from "../../store";
 
-const WindSpeedComponent= () => {
+const WindSpeed = () => {
 
     const windSpeed = useAppSelector(
         (state) => state.weather.data?.current.wind_kph
@@ -18,4 +18,4 @@ const WindSpeedComponent= () => {
     )
 }
 
-export default WindSpeedComponent;
+export default WindSpeed;

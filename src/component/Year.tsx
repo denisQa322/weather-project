@@ -6,7 +6,7 @@ interface Props {
     date: Date;
 }
 
-const YearComponent: React.FC<Props> = ({ date }) => {
+const Year: React.FC<Props> = ({ date }) => {
     const formattedYear = format(date, 'yyyy', { locale: ru });
 
     return (
@@ -15,4 +15,4 @@ const YearComponent: React.FC<Props> = ({ date }) => {
     </h3>)
 };
 
-export default YearComponent;
+export default Year;

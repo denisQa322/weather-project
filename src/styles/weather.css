@@ -5,6 +5,7 @@
     color: white;
     width: 1034px;
     margin: auto;
+    margin-top: 50px;
     background-color: #222831;
     border-radius: 30px 25px 25px 30px;
 }
@@ -28,6 +29,7 @@
 
 .location-info{
     display: flex;
+    justify-content: space-between;
     gap: 15px;
     flex-direction: column;
     margin-bottom: 200px;
@@ -35,6 +37,7 @@
 
 .location-info-weekday{
     font-size: 37px;
+    margin: 0;
 }
 
 .date{
@@ -43,11 +46,17 @@
     font-weight: 400;
 }
 
+
+.location-info-date, .location-info-year{
+    margin: 0;
+}
+
+
+
 .location-info-city{
     display: flex;
     gap: 10px;
 }
-
 
 .location-info-city-name{
     font-size: 20px;
@@ -77,10 +86,11 @@
 .weather-forecast-info{
     display: flex;
     color: white;
-    padding: 65px 80px;
+    padding: 60px 60px 80px 30px;
     flex-wrap: wrap;
     border-radius: 0px 25px 25px 0;
-    width: 542px;
+    width: 420px;
+    margin: 0
 }
 
 .date-info{
@@ -90,61 +100,32 @@
     width: 420px;
     margin-bottom: 25px;
 }
-.precipitation, .humidity, .wind-speed{
+.precipitation, .humidity, .wind-speed, .cloud, .visibility, .gusts, .wind-direction, .pressure, .wind-degree{
     display: flex;
     justify-content: space-between; 
     align-items: flex-end;
 }
 
-.precipitation-name, .humidity-name, .wind-name{
+.precipitation-name, .humidity-name, .wind-name, .cloud-name, .visibility-name, .gusts-name, .wind-direction-name, .pressure-name, .wind-degree-name{ 
     font-size: 28px;
     font-weight: 700;
+    margin: 0;
 }
-.precipitation-amount, .humidity-percent, .wind-speed{
+.precipitation-mm, .humidity-percent, .wind-speed, .cloud-percent, .visibility-km, .gusts-km, .wind-direction-deg, .pressure-hpa, .wind-degree-deg{
     font-size: 28px;
     font-weight: 400;
-}
-
-.weather-forecast{
-    display: flex;
-    
-}
-
-.forecast{
-    height: 165px;
-    width: 95.5px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-}
-.weather-forecast-img img{
-    height: 55px;
-    width: 55px;
-}
-
-.day-of-forecast{
-    height: 24px;
-    width: fit-content;
-    font-size: 18px;
-}
-
-.weather-forecast-temp{
-    font-size: 20px;
-    width: fit-content;
-    display: flex;
+    margin: 0;
 }
 
 .choose-city{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 415px;
-    margin: auto;
+    width: 420px;
 }
 
 .choose-city .city-name{
-    padding: 13px 105px;
+    padding: 13px 112.5px;
     background-color: white;
     border-radius: 10px;
 }
@@ -160,4 +141,30 @@
     width: 33px;
     height: 33px;
     margin-right: 15px;
+}
+
+.error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: red;
+}
+
+.error-description{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.reload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 10px 20px;
+    background: linear-gradient(#90D9E0, #5460E6);
+    color: white;
+    border-radius: 10px;
 }

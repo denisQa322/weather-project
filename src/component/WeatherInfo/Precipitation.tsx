@@ -1,6 +1,6 @@
-import { useAppSelector } from "../store";
+import { useAppSelector } from "../../store";
 
-const PrecipitationComponent = () => {
+const Precipitation = () => {
     const precipitation = useAppSelector(
         (state) => state.weather.data?.current.precip_mm
     );
@@ -17,4 +17,4 @@ const PrecipitationComponent = () => {
     )
 }
 
-export default PrecipitationComponent;
+export default Precipitation;

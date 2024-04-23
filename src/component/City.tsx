@@ -1,11 +1,11 @@
-import Location from '../icons/Location.svg'
+import { useAppSelector } from "../store";
+import Location from '../icons/Location.svg';
 
-interface Props{
-    nameCity: string;
-}
+const CityName = () => {
 
-
-const CityNameComponent: React.FC<Props> = ({ nameCity }) => {
+    const nameCity = useAppSelector(
+        (state) => state.weather.data?.location.name
+    );
     
     return (
         <div className='location-info-city'>
@@ -19,4 +19,4 @@ const CityNameComponent: React.FC<Props> = ({ nameCity }) => {
     )
 }
 
-export default CityNameComponent;
+export default CityName;

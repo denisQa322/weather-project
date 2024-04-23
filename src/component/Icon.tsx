@@ -1,6 +1,6 @@
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "../store";
 
-const IconComponent = () => {
+const Icon = () => {
     
     const icon = useAppSelector(
         (state) => state.weather.data?.current.condition.icon
@@ -13,4 +13,4 @@ const IconComponent = () => {
     );
 };
 
-export default IconComponent;
+export default Icon;

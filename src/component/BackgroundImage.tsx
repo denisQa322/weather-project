@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DaysOfWeek from "./Days";
 import { days } from "../const/days";
 import DateComponent from "./Date";
@@ -14,13 +14,16 @@ import { fetchImage } from "../store/ImageSlice";
 const BackgroundImageComponent = () => {
     
     const dispatch = useAppDispatch();
-    const image = useAppSelector(
-        (state) => state.image.data?.urls.regular
-    );
-    console.log(image)
+    const city = useAppSelector((state) => state.city.city);
+    const image = useAppSelector((state) => state.image);
+    console.log(useAppSelector((state) => state.image.data?.urls.small_s3))
+    
+    useEffect(() => {
+        dispatch(fetchImage(city)); 
+      }, [dispatch, city]);
 
     return(
-        <section className='weather-location-info' style={{ backgroundImage: `url(${dispatch(fetchImage(`${image}`))})`}}>
+        <section className='weather-location-info' style={{ backgroundImage: `url(${image})})`}}>
             <div className="location-info">
                     <DaysOfWeek days={days[0]}/>
                     <div className='date'>

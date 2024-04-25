@@ -2,8 +2,6 @@ import React, { ChangeEvent } from 'react';
 import Input  from '@mui/material/Input';
 import { useAppDispatch } from '../store';
 import { setCity } from '../store/CitySlice';
- 
-
 
 const InputComponent = () => {
   

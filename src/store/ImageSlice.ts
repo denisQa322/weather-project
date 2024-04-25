@@ -18,7 +18,7 @@ export interface ImageResponse {
     data?: ImageResponse;
   }
   const initialState: ImageState = { 
-    image: "",
+    image: "https://images.unsplash.com/photo-1572940734104-684309ed7ac9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1OTM5NzV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTQwNTgwMjZ8&ixlib=rb-4.0.3&q=80&w=1080",
   };
 
   export const fetchImage = createAsyncThunk(

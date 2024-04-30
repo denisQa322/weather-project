@@ -16,7 +16,7 @@ const BackgroundImageComponent = () => {
     const dispatch = useAppDispatch();
     const city = useAppSelector((state) => state.city.city);
     const image = useAppSelector((state) => state.image);
-    console.log(useAppSelector((state) => state.image.data?.urls.small_s3))
+    console.log(useAppSelector((state) => state))
     
     useEffect(() => {
         dispatch(fetchImage(city)); 

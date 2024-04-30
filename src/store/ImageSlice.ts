@@ -1,25 +1,30 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { fetchWeatherData } from "./WeatherSlice";
 
 export interface ImageResponse {
-    urls: Urls;
-  }
-  export interface Urls {
-    raw: string;
-    full: string;
-    regular: string;
-    small: string;
-    thumb: string;
-    small_s3: string;
-  }
+  payload: Payload;
+}
+export interface Payload {
+  urls: Urls;
+}
+export interface Urls {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
+  small_s3: string;
+}
 
   interface ImageState{
-    image: string;
+    status: "idle" | "loading" | "failed" | "success";
     data?: ImageResponse;
+    error?: unknown;
   }
-  const initialState: ImageState = { 
-    image: "",
-  };
+  const initialState: ImageState = {
+    status: "idle",
+   };
 
   export const fetchImage = createAsyncThunk(
     "image/fetchImage",
@@ -39,6 +44,20 @@ export interface ImageResponse {
         setImage: (state, action: PayloadAction<ImageResponse>) => {
         state.data = action.payload;
       },
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(fetchImage.pending, (state) => {
+          state.status = "loading";
+        })
+        .addCase(fetchImage.fulfilled, (state, action) => {
+          state.status = "success";
+          state.data = action.payload;
+        })
+        .addCase(fetchImage.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message || null;
+        });
     },
   });
   

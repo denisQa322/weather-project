@@ -4,6 +4,7 @@ import Location from '../icons/Location.svg';
 import { fetchWeatherData } from '../store/WeatherSlice';
 import { useAppDispatch, useAppSelector } from '../store';
 import { setCity } from '../store/CitySlice';
+import { fetchImage } from '../store/ImageSlice';
 
 
 const ButtonComponent = () => {
@@ -14,6 +15,7 @@ const ButtonComponent = () => {
     const handleFetchWeather = () => {
         if (city.trim() !== ""){
             dispatch(fetchWeatherData(city));
+            dispatch(fetchImage(city));
         }
         setCity("");
     }

@@ -4,7 +4,6 @@ export interface CityName{
     city: string;
 }
 
-
 const initialState: CityName = {
     city: "Almaty"
 };

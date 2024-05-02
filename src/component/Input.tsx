@@ -18,4 +18,4 @@ const InputComponent = () => {
   )
 }
 
-export default InputComponent; 
+export default InputComponent;

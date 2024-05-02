@@ -8,7 +8,6 @@ import InputComponent from './Input';
 import BackgroundImageComponent from './BackgroundImage';
 import { useAppDispatch, useAppSelector } from '../store';
 import { fetchWeatherData } from '../store/WeatherSlice';
-import { fetchImage } from '../store/ImageSlice';
 import Loading from './States/Loading';
 import Error from './States/Error';
 import Cloud from './WeatherInfo/Cloud';
@@ -26,7 +25,7 @@ export function WeatherComponent() {
 
     useEffect(() => {
         dispatch(fetchWeatherData(city));
-    }, [ dispatch, city])
+    }, [dispatch])
     
     if (status === "loading") return <>
         <Loading/>
